@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Anphonic internal onboarding and sales enablement training.">
+  <title>Anphonic Training | Merchant Growth Foundations</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #607080;
+      --paper: #f7f9fb;
+      --panel: #ffffff;
+      --line: #dbe3ea;
+      --nav: #10212a;
+      --nav-2: #173641;
+      --teal: #0f8b83;
+      --teal-soft: #e7f7f4;
+      --blue-soft: #eaf2ff;
+      --amber: #9a5e00;
+      --amber-soft: #fff4df;
+      --red: #a33e37;
+      --red-soft: #fff0ee;
+      --purple: #6651a8;
+      --purple-soft: #f1edff;
+      --radius: 14px;
+      --shadow: 0 10px 25px rgba(25, 42, 54, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    .app { min-height: 100vh; display: grid; grid-template-columns: 280px minmax(0, 1fr); }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 24px 16px;
+      color: #dce9ed;
+      background: linear-gradient(180deg, var(--nav), #0b171d);
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .brand { display: flex; gap: 11px; align-items: center; padding: 0 8px 18px; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #05312e; background: #67dccf; font-weight: 800; font-size: 13px; }
+    .brand strong { display: block; color: white; letter-spacing: -.02em; }
+    .brand span { display: block; margin-top: 2px; font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: #8fb0ba; }
+    .progress { margin: 18px 8px 14px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: #98b0b8; letter-spacing: .06em; text-transform: uppercase; }
+    .rail { height: 7px; margin-top: 8px; overflow: hidden; border-radius: 9px; background: rgba(255,255,255,.12); }
+    .fill { height: 100%; width: 0; background: #65ddcf; transition: width .25s ease; }
+    nav { display: grid; gap: 4px; }
+    .nav-btn {
+      width: 100%; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #b7cbd1;
+      padding: 10px 10px; text-align: left; cursor: pointer; font: inherit; font-size: 13px; transition: .15s ease;
+    }
+    .nav-btn:hover, .nav-btn:focus-visible { background: rgba(255,255,255,.08); color: white; outline: none; }
+    .nav-btn.active { color: #eafffb; background: rgba(92, 215, 201, .16); border-color: rgba(103, 220, 207, .32); }
+    .nav-num { display: inline-block; width: 27px; color: #73d8ce; font-size: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .sidebar-foot { margin: 24px 8px 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,.12); font-size: 11px; color: #89a3ab; }
+
+    main { width: min(1080px, 100%); padding: 46px 52px 84px; }
+    .section { display: none; animation: appear .22s ease; }
+    .section.active { display: block; }
+    @keyframes appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .eyebrow { color: var(--teal); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; }
+    h1 { margin: 7px 0 12px; font-size: clamp(30px, 4.2vw, 46px); line-height: 1.06; letter-spacing: -.045em; }
+    h2 { margin: 34px 0 12px; font-size: 24px; line-height: 1.18; letter-spacing: -.025em; }
+    h3 { margin: 0 0 7px; font-size: 16px; letter-spacing: -.015em; }
+    .lede { max-width: 760px; color: var(--muted); font-size: 17px; }
+    .meta { margin: 18px 0 4px; color: var(--muted); font-size: 13px; }
+    .grid { display: grid; gap: 16px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { padding: 19px 20px; border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); box-shadow: 0 2px 7px rgba(26, 48, 62, .035); }
+    .card p:last-child { margin-bottom: 0; }
+    .callout { margin: 24px 0; padding: 16px 18px; border-left: 4px solid var(--teal); border-radius: 0 11px 11px 0; background: var(--teal-soft); }
+    .callout.warning { border-left-color: #e6a11c; background: var(--amber-soft); }
+    .callout.danger { border-left-color: #df675d; background: var(--red-soft); }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .checklist { padding-left: 20px; }
+    .checklist li { margin: 8px 0; }
+    .small { color: var(--muted); font-size: 13px; }
+    .tag { display: inline-block; margin: 3px 6px 3px 0; padding: 4px 8px; border: 1px solid #bfe8e3; border-radius: 999px; color: #086b64; background: var(--teal-soft); font-size: 12px; font-weight: 700; }
+    .tag.purple { border-color: #d9cffb; color: var(--purple); background: var(--purple-soft); }
+    .tag.amber { border-color: #f0d39f; color: var(--amber); background: var(--amber-soft); }
+    .journey { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; margin: 22px 0; }
+    .journey-step { flex: 1 1 105px; padding: 13px 10px; text-align: center; font-size: 13px; font-weight: 700; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+    .arrow { align-self: center; color: var(--teal); font-weight: 800; }
+    .feature { border: 1px solid var(--line); overflow: hidden; border-radius: var(--radius); background: var(--panel); }
+    .feature-head { padding: 15px 17px; background: #f9fbfc; border-bottom: 1px solid var(--line); }
+    .feature-body { padding: 17px; }
+    .visual { margin: 14px 0 16px; padding: 16px; border: 1px dashed #aebdc6; border-radius: 10px; color: #4d6470; background: #f6f9fa; font-size: 13px; }
+    .visual strong { color: var(--ink); }
+    .example-ui { padding: 14px; border: 1px solid #d6e1e5; border-radius: 10px; background: white; box-shadow: 0 4px 12px rgba(23,33,43,.06); }
+    .announcement { padding: 8px 12px; text-align: center; border-radius: 6px; color: white; background: #233a47; font-size: 12px; font-weight: 700; }
+    .cart-demo { margin-top: 10px; padding: 13px; border: 1px solid #d9e4e8; border-radius: 7px; }
+    .bar-bg { height: 9px; overflow: hidden; margin: 9px 0 6px; border-radius: 7px; background: #e3e9eb; }
+    .bar-fill { height: 100%; width: 72%; border-radius: 7px; background: var(--teal); }
+    .metric { padding: 16px; border-radius: var(--radius); background: white; border: 1px solid var(--line); }
+    .metric-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--teal); font-size: 12px; font-weight: 700; }
+    .table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { background: #f4f7f9; color: #39505c; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+    tr:last-child td { border-bottom: 0; }
+    .talk { margin: 14px 0; padding: 16px 18px; border-left: 4px solid #8e75d1; border-radius: 0 10px 10px 0; background: var(--purple-soft); }
+    .talk .label { margin-bottom: 6px; color: var(--purple); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 800; }
+    .quiz { margin-top: 28px; padding: 21px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .question { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .question:first-of-type { margin-top: 8px; }
+    .options { display: grid; gap: 8px; margin-top: 10px; }
+    .option { width: 100%; padding: 11px 12px; cursor: pointer; color: var(--ink); text-align: left; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfd; font: inherit; font-size: 13px; }
+    .option:hover, .option:focus-visible { border-color: var(--teal); outline: none; }
+    .option.correct { color: #075e57; border-color: var(--teal); background: var(--teal-soft); }
+    .option.wrong { color: #8d332e; border-color: #d97870; background: var(--red-soft); }
+    .feedback { display: none; margin-top: 9px; color: var(--muted); font-size: 13px; }
+    .feedback.show { display: block; }
+    .actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 34px; }
+    .btn { padding: 11px 15px; border: 1px solid var(--line); border-radius: 9px; cursor: pointer; color: var(--ink); background: white; font: inherit; font-weight: 700; }
+    .btn:hover, .btn:focus-visible { border-color: var(--teal); outline: none; }
+    .btn.primary { color: #032e2a; border-color: var(--teal); background: #6cdbd0; }
+    .status { margin-top: 12px; color: var(--muted); font-size: 13px; }
+    details { margin: 10px 0; padding: 0 15px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+    summary { padding: 13px 0; cursor: pointer; font-weight: 700; }
+    details p { padding-bottom: 13px; color: var(--muted); }
+
+    @media (max-width: 880px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; padding-bottom: 15px; }
+      nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sidebar-foot { display: none; }
+      main { padding: 32px 20px 64px; }
+    }
+    @media (max-width: 640px) {
+      nav { grid-template-columns: 1fr; }
+      .two, .three { grid-template-columns: 1fr; }
+      .arrow { display: none; }
+      h1 { font-size: 32px; }
+      .actions { flex-direction: column-reverse; }
+      .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Training navigation">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">AF</div>
+        <div><strong>Anphonic</strong><span>Merchant Growth Training</span></div>
+      </div>
+      <div class="progress">
+        <div class="progress-label"><span>Progress</span><span id="progressText">0%</span></div>
+        <div class="rail"><div class="fill" id="progressFill"></div></div>
+      </div>
+      <nav id="nav"></nav>
+      <div class="sidebar-foot">
+        Internal learning resource<br>
+        Version 2.0 · Review quarterly<br>
+        Product, pricing, compatibility and market availability must be verified before a client commitment.
+      </div>
+    </aside>
+
+    <main id="main" tabindex="-1"></main>
+  </div>
+
+  <script>
+    const modules = [
+      { id: 'start', num: '01', label: 'Start Here' },
+      { id: 'anphonic', num: '02', label: 'Anphonic & ICP' },
+      { id: 'metrics', num: '03', label: 'Metrics & Benchmarks' },
+      { id: 'diagnosis', num: '04', label: 'Merchant Diagnosis' },
+      { id: 'rebuy', num: '05', label: 'Rebuy Fundamentals' },
+      { id: 'eligibility', num: '06', label: 'Packages & Eligibility' },
+      { id: 'optimonk', num: '07', label: 'OptiMonk Playbook' },
+      { id: 'pitch', num: '08', label: 'How to Pitch' },
+      { id: 'audit', num: '09', label: 'Store Audit' },
+      { id: 'certification', num: '10', label: 'Certification' }
+    ];
+
+    const storageKey = 'anphonic-training-v2-progress';
+    const state = JSON.parse(localStorage.getItem(storageKey) || '{"active":"start","completed":{},"answers":{}}');
+    let active = state.active || 'start';
+
+    function save() { localStorage.setItem(storageKey, JSON.stringify(state)); }
+    function complete(id) { state.completed[id] = true; save(); renderNav(); }
+    function completionPercent() { return Math.round((Object.keys(state.completed).length / modules.length) * 100); }
+
+    function renderNav() {
+      const nav = document.getElementById('nav');
+      nav.innerHTML = modules.map(m => `
+        <button class="nav-btn ${m.id === active ? 'active' : ''}" data-go="${m.id}" aria-current="${m.id === active ? 'page' : 'false'}">
+          <span class="nav-num">${m.num}</span>${state.completed[m.id] ? '✓ ' : ''}${m.label}
+        </button>`).join('');
+      nav.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => go(btn.dataset.go)));
+      const pct = completionPercent();
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = pct + '%';
+    }
+
+    function nextOf(id) { const i = modules.findIndex(m => m.id === id); return modules[i + 1]?.id; }
+    function prevOf(id) { const i = modules.findIndex(m => m.id === id); return modules[i - 1]?.id; }
+    function go(id) { active = id; state.active = id; save(); renderNav(); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); document.getElementById('main').focus({preventScroll:true}); }
+
+    function navActions(id) {
+      const prev = prevOf(id), next = nextOf(id);
+      return `<div class="actions">
+        ${prev ? `<button class="btn" data-go="${prev}">← Previous</button>` : '<span></span>'}
+        ${next ? `<button class="btn primary" data-complete="${id}" data-go="${next}">Mark complete & continue →</button>` : `<button class="btn primary" data-complete="${id}">Mark module complete ✓</button>`}
+      </div>`;
+    }
+
+    function quiz(id, questions) {
+      return `<section class="quiz" aria-label="Knowledge check">
+        <div class="eyebrow">Knowledge check</div>
+        <h3>Check your understanding</h3>
+        <p class="small">Choose an answer. These questions are for practice; certification is completed in the final section.</p>
+        ${questions.map((q, qi) => `
+          <div class="question" data-quiz="${id}" data-question="${qi}">
+            <strong>${qi + 1}. ${q.q}</strong>
+            <div class="options">
+              ${q.options.map((o, oi) => `<button class="option" data-answer="${oi}" data-correct="${q.correct}" data-feedback="${encodeURIComponent(q.feedback)}">${o}</button>`).join('')}
+            </div>
+            <div class="feedback">${q.feedback}</div>
+          </div>`).join('')}
+      </section>`;
+    }
+
+    const pages = {
+      start: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 1 · Orientation</div>
+          <h1>Merchant growth foundations</h1>
+          <p class="lede">This training teaches you how to understand a merchant, identify the business problem, connect it to the right metric, and recommend the right Anphonic solution. It is not a feature memorisation exercise.</p>
+          <div class="grid three" style="margin-top:26px">
+            <div class="card"><h3>Who it is for</h3><p>New joinees across sales, partnerships, merchant success, strategy and operations.</p></div>
+            <div class="card"><h3>Time required</h3><p>About 75–90 minutes for the learning modules, plus practical certification.</p></div>
+            <div class="card"><h3>Expected outcome</h3><p>Confident, accurate, consultative conversations—not generic product pitches.</p></div>
+          </div>
+          <h2>The learning journey</h2>
+          <div class="journey" aria-label="Learning journey">
+            <div class="journey-step">Understand Anphonic</div><span class="arrow">→</span>
+            <div class="journey-step">Understand the merchant</div><span class="arrow">→</span>
+            <div class="journey-step">Understand metrics</div><span class="arrow">→</span>
+            <div class="journey-step">Diagnose the issue</div><span class="arrow">→</span>
+            <div class="journey-step">Match a solution</div><span class="arrow">→</span>
+            <div class="journey-step">Pitch clearly</div>
+          </div>
+          <div class="callout"><strong>The core rule</strong>Start with the merchant’s goal and problem. Then identify the affected metric. Then choose the feature. Only after that should you discuss packages.</div>
+          <h2>By the end, you should be able to</h2>
+          <ul class="checklist">
+            <li>Identify whether a merchant is a good fit for Anphonic.</li>
+            <li>Explain AOV, conversion rate, ROAS, MER, OPM, CAC, LTV, RTO and repeat purchase rate.</li>
+            <li>Map a visible store issue to a merchant outcome and a relevant solution.</li>
+            <li>Explain core Rebuy and OptiMonk features in plain language.</li>
+            <li>Qualify checkout and plan eligibility before discussing gated products.</li>
+            <li>Conduct a basic store audit and write a credible recommendation.</li>
+          </ul>
+          <div class="callout warning"><strong>Always validate before promising</strong>Pricing, package contents, Shopify eligibility, integration compatibility, market availability and performance claims can change. Confirm the current source of truth before making a commitment to a merchant.</div>
+          ${navActions('start')}
+        </section>`,
+
+      anphonic: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 2 · Context</div>
+          <h1>Anphonic and the ideal customer</h1>
+          <p class="lede">Before learning the tools, understand the business Anphonic is trying to help—and the merchants for whom optimisation work can create measurable value.</p>
+          <h2>What Anphonic does</h2>
+          <div class="callout"><strong>Simple explanation</strong>Anphonic helps e-commerce brands improve what happens after traffic arrives: product discovery, conversion, average order value, customer experience, retention and customer insight. We combine strategy, optimisation and the right technology to solve a specific commercial problem.</div>
+          <h2>Anphonic’s ICP</h2>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Dimension</th><th>Strong-fit merchant</th></tr></thead>
+            <tbody>
+              <tr><td>Business model</td><td>D2C or digitally led consumer brand.</td></tr>
+              <tr><td>Platform</td><td>Primarily Shopify or Shopify Plus, with a working e-commerce storefront.</td></tr>
+              <tr><td>Markets</td><td>India, UAE and other markets where Anphonic has the ability to sell and deliver.</td></tr>
+              <tr><td>Stage</td><td>Enough traffic, orders and catalogue depth for optimisation to create measurable impact.</td></tr>
+              <tr><td>Growth need</td><td>Conversion, AOV, product discovery, retention, acquisition efficiency or customer insight.</td></tr>
+              <tr><td>Team readiness</td><td>A marketing, e-commerce or founder owner who can act on recommendations.</td></tr>
+              <tr><td>Technology readiness</td><td>Open to experimentation, personalisation and app-based optimisation.</td></tr>
+            </tbody>
+          </table></div>
+          <h2>Potential weak fits</h2>
+          <div class="grid two">
+            <div class="card"><h3>Too early to optimise</h3><p>Very limited traffic or orders, no meaningful baseline, or a store that is not yet functional.</p></div>
+            <div class="card"><h3>Wrong problem</h3><p>The core issue is inventory, fulfilment, product-market fit or a basic website build—not the on-site merchant journey.</p></div>
+            <div class="card"><h3>Unrealistic expectations</h3><p>A merchant wants guaranteed revenue outcomes or is unwilling to validate data and implementation requirements.</p></div>
+            <div class="card"><h3>No action owner</h3><p>No internal stakeholder can approve, implement or evaluate recommended changes.</p></div>
+          </div>
+          ${quiz('icp', [
+            {q:'Which merchant is the strongest initial fit for Anphonic?', options:['A pre-launch brand with no store traffic','A Shopify skincare brand with paid traffic, a working catalogue and low AOV','A business asking only for warehouse management','A brand that requires guaranteed conversion growth'], correct:1, feedback:'A merchant with traffic, a functioning store and an identifiable growth opportunity is best positioned to benefit from optimisation.'},
+            {q:'What should you identify before discussing a product package?', options:['The merchant’s problem and affected metric','The most expensive package','Every competitor installed','A promise of revenue impact'], correct:0, feedback:'Diagnosis comes before packaging. First understand the merchant’s goal, journey friction and affected metric.'}
+          ])}
+          ${navActions('anphonic')}
+        </section>`,
+
+      metrics: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 3 · Commercial literacy</div>
+          <h1>Metrics and benchmarks</h1>
+          <p class="lede">Features matter only when they influence a business outcome. This section gives you the language to understand a merchant’s performance and diagnose where an opportunity may exist.</p>
+          <div class="grid three" style="margin-top:24px">
+            <div class="metric"><div class="metric-code">CR = Orders ÷ Sessions × 100</div><h3>Conversion rate</h3><p>How efficiently store traffic becomes orders.</p></div>
+            <div class="metric"><div class="metric-code">AOV = Revenue ÷ Orders</div><h3>Average order value</h3><p>How much revenue the merchant earns per order.</p></div>
+            <div class="metric"><div class="metric-code">ROAS = Attributed revenue ÷ Ad spend</div><h3>Return on ad spend</h3><p>Efficiency of a paid advertising channel.</p></div>
+            <div class="metric"><div class="metric-code">MER = Total revenue ÷ Total marketing spend</div><h3>Marketing efficiency ratio</h3><p>Blended efficiency across marketing spend.</p></div>
+            <div class="metric"><div class="metric-code">OPM = Operating profit ÷ Revenue × 100</div><h3>Operating profit margin</h3><p>Profitability after the operating costs defined by the merchant.</p></div>
+            <div class="metric"><div class="metric-code">CAC = Acquisition spend ÷ New customers</div><h3>Customer acquisition cost</h3><p>The cost to acquire a new customer.</p></div>
+            <div class="metric"><div class="metric-code">LTV = Customer revenue over time</div><h3>Lifetime value</h3><p>The long-term revenue a customer produces over a defined period.</p></div>
+            <div class="metric"><div class="metric-code">Repeat customers ÷ Total customers × 100</div><h3>Repeat purchase rate</h3><p>A measure of retention and replenishment behaviour.</p></div>
+            <div class="metric"><div class="metric-code">RTO orders ÷ Shipped orders × 100</div><h3>Return to Origin</h3><p>A delivery and COD-related loss measure, especially relevant in India.</p></div>
+          </div>
+          <h2>How to use benchmarks</h2>
+          <div class="callout warning"><strong>Benchmark ranges are directional, not promises.</strong>Conversion rate, ROAS, OPM and other metrics vary materially by category, price point, country, traffic quality, device mix, offer strategy, repeat-purchase cycle and attribution method. Use internal category data first; compare a merchant against its own baseline before calling a number “good” or “bad.”</div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Category</th><th>Metrics to prioritise</th><th>What changes interpretation</th></tr></thead>
+            <tbody>
+              <tr><td>Beauty & personal care</td><td>CR, AOV, repeat purchase rate, CAC/LTV</td><td>Replenishment cycle, subscription mix, bundles and offer intensity.</td></tr>
+              <tr><td>Fashion & apparel</td><td>CR, AOV, return rate, ROAS</td><td>Size availability, discounting, assortment, returns and seasonality.</td></tr>
+              <tr><td>Food & beverage</td><td>Repeat purchase rate, AOV, MER, LTV</td><td>Consumption frequency, subscription and geographic delivery coverage.</td></tr>
+              <tr><td>Health & wellness</td><td>CR, AOV, repeat purchase rate, CAC/LTV</td><td>Education, trust, claims compliance and replenishment period.</td></tr>
+              <tr><td>Home & lifestyle</td><td>AOV, CR, ROAS, MER</td><td>Higher consideration time, price point and catalog complexity.</td></tr>
+            </tbody>
+          </table></div>
+          <h2>Metric-to-opportunity map</h2>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Observed issue</th><th>Questions to ask</th><th>Possible solution areas</th></tr></thead>
+            <tbody>
+              <tr><td>Low conversion rate</td><td>Is product discovery weak? Is the PDP clear? Does paid traffic see a relevant landing experience?</td><td>Search, product recommendations, personalisation, testing, content and journey optimisation.</td></tr>
+              <tr><td>Low AOV</td><td>Are cross-sells, bundles, thresholds or subscription prompts visible at the right moment?</td><td>Smart Cart, merchandising widgets, bundles, progress incentives.</td></tr>
+              <tr><td>High cart abandonment</td><td>Are shipping, value, urgency and cart incentives clear? Is checkout a separate issue?</td><td>Cart optimisation, shipping messaging, exit intent and targeted offers.</td></tr>
+              <tr><td>Poor ROAS or MER</td><td>Is the issue traffic quality, landing relevance, conversion, offer strategy or attribution?</td><td>Landing personalisation, experiment design, conversion work and better measurement.</td></tr>
+              <tr><td>Low OPM</td><td>Is margin being eroded by discounting, high CAC, low AOV, returns or RTO?</td><td>Margin-aware offers, AOV work, segmentation and quality-of-customer analysis.</td></tr>
+            </tbody>
+          </table></div>
+          ${quiz('metrics', [
+            {q:'AOV measures:', options:['How much revenue each order generates on average','How many visitors purchase','How much a brand spends on ads','How many orders return to origin'], correct:0, feedback:'AOV is revenue divided by orders. It is a key measure for cart, bundle and cross-sell opportunities.'},
+            {q:'A merchant has reasonable paid traffic but weak conversion. What is the best first response?', options:['Guarantee a new popup will fix it','Diagnose where in the journey the friction happens','Immediately recommend the biggest package','Assume the ads are the problem'], correct:1, feedback:'Low conversion can have many causes. Diagnose the journey before choosing a feature or assigning blame.'}
+          ])}
+          ${navActions('metrics')}
+        </section>`,
+
+      diagnosis: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 4 · Discovery</div>
+          <h1>Diagnose the merchant before recommending a tool</h1>
+          <p class="lede">A credible recommendation connects an observed journey issue to a measurable business outcome. It does not begin with “we have this feature.”</p>
+          <h2>The customer journey</h2>
+          <div class="journey">
+            <div class="journey-step">Traffic</div><span class="arrow">→</span><div class="journey-step">Landing page</div><span class="arrow">→</span><div class="journey-step">Discovery</div><span class="arrow">→</span><div class="journey-step">Product page</div><span class="arrow">→</span><div class="journey-step">Cart</div><span class="arrow">→</span><div class="journey-step">Checkout</div><span class="arrow">→</span><div class="journey-step">Post-purchase</div><span class="arrow">→</span><div class="journey-step">Repeat purchase</div>
+          </div>
+          <h2>Eight questions to ask</h2>
+          <ol class="checklist">
+            <li>What does the merchant sell, and who is the core customer?</li>
+            <li>Which market(s) does the store serve?</li>
+            <li>Where does most traffic come from?</li>
+            <li>What business goal matters most right now: conversion, AOV, profitability, retention or insight?</li>
+            <li>Which metric appears weak, and compared with what baseline?</li>
+            <li>At which journey stage does friction appear?</li>
+            <li>What technologies and workflows are already installed?</li>
+            <li>What commercial or technical constraints must be validated?</li>
+          </ol>
+          <div class="callout"><strong>Use evidence</strong>Base a recommendation on screenshots, analytics, merchant context, a store walkthrough or documented findings. If you are making an assumption, label it as an assumption.</div>
+          <h2>Simple diagnosis example</h2>
+          <div class="card"><h3>Observation</h3><p>A skincare store gets substantial paid social traffic. Product pages are strong, but the cart only shows line items and a checkout button. There are no related-product prompts, no spend threshold and no bundle logic.</p><h3>Likely opportunity</h3><p>AOV and items per order may be leaving value on the table.</p><h3>Next step</h3><p>Validate cart completion, current AOV, margin rules and best product combinations before recommending Smart Cart, a tiered incentive or bundles.</p></div>
+          ${navActions('diagnosis')}
+        </section>`,
+
+      rebuy: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 5 · Product foundations</div>
+          <h1>Rebuy: understand the feature, then the package</h1>
+          <p class="lede">Rebuy supports on-site merchandising, cart optimisation, search, personalisation and selected checkout/post-purchase experiences. Teach every feature through the merchant problem it solves.</p>
+          <div class="callout"><strong>Feature explanation framework</strong>For every feature, answer: What problem does it solve? Where does it appear? What does the shopper see? Which metric can it influence? How would you explain it simply? What must be validated?</div>
+          <h2>Cart merchandising</h2>
+          <div class="grid two">
+            <article class="feature"><div class="feature-head"><h3>Smart Cart</h3><span class="tag">Cart experience</span><span class="tag">AOV</span></div><div class="feature-body"><p><strong>Problem:</strong> The default cart may do little more than show products and a checkout button.</p><p><strong>What it is:</strong> A configurable cart drawer that can display relevant product suggestions, incentives, offers and subscription prompts before checkout.</p><p><strong>Pitch:</strong> “We can make the cart a more useful decision point—helping customers discover complementary items and understand the value of adding to their order.”</p><div class="visual"><strong>Screenshot needed:</strong> Add a real Smart Cart screenshot with arrows for product recommendations, progress bar, gift and subscription controls.</div></div></article>
+            <article class="feature"><div class="feature-head"><h3>Tiered Progress Bar</h3><span class="tag">Cart incentive</span><span class="tag">AOV</span></div><div class="feature-body"><p><strong>Problem:</strong> Customers may not see a clear reason to add another item.</p><p><strong>What it is:</strong> A cart message that shows a shopper how close they are to a defined reward, such as free shipping, a gift or a discount.</p><div class="example-ui"><div class="small">Cart total: ₹1,200</div><strong>Add ₹300 more to unlock free shipping</strong><div class="bar-bg"><div class="bar-fill"></div></div><div class="small">₹1,500 reward threshold</div></div><p><strong>Pitch:</strong> “Instead of a generic message, the shopper sees exactly how close they are to the next reward.”</p></div></article>
+            <article class="feature"><div class="feature-head"><h3>Announcement Banner</h3><span class="tag amber">Site-wide message</span></div><div class="feature-body"><p><strong>Problem:</strong> The merchant needs to communicate a broad message such as a promotion, delivery condition or seasonal launch.</p><p><strong>What it is:</strong> A persistent, top-of-site message. It communicates; it does not calculate cart progress.</p><div class="example-ui"><div class="announcement">Free shipping on orders above ₹1,500 · Shop now →</div></div><p><strong>Key difference:</strong> An announcement banner is usually the same for everyone. A tiered progress bar adapts to the shopper’s current cart value.</p></div></article>
+            <article class="feature"><div class="feature-head"><h3>Bundles and recommendations</h3><span class="tag">AOV</span><span class="tag">Discovery</span></div><div class="feature-body"><p><strong>Dynamic Bundles:</strong> Curated product combinations with discount logic.</p><p><strong>Bundle Builder:</strong> A build-your-own-bundle experience where the shopper selects eligible products.</p><p><strong>Merchandising Widgets:</strong> Relevant product recommendations placed on product, collection, cart or other store pages.</p><p><strong>Validation:</strong> Confirm catalogue logic, margins, availability and any checkout/API compatibility constraints before promising advanced bundle behaviour.</p></div></article>
+          </div>
+          <h2>Search, collections and journeys</h2>
+          <div class="grid three">
+            <div class="card"><h3>Smart Search</h3><p>Improves product discovery when a shopper actively searches. Use it when site search is slow, irrelevant or missing helpful autocomplete.</p><span class="tag">Conversion</span><span class="tag">Discovery</span></div>
+            <div class="card"><h3>Smart Collections</h3><p>Helps merchandise products already assigned to a collection using rules such as boost, demote or hide.</p><span class="tag">Conversion</span><span class="tag">Merchandising</span></div>
+            <div class="card"><h3>Smart Flows & testing</h3><p>Supports no-code site or link-based journeys and structured experimentation. Test a hypothesis; do not test for activity alone.</p><span class="tag">Learning</span><span class="tag">Personalisation</span></div>
+          </div>
+          <h2>UTM personalisation and Smart Links</h2>
+          <div class="card"><p><strong>UTM-based personalisation</strong> changes what a shopper sees after arriving through a tagged link—for example, adapting a landing message for Instagram traffic.</p><p><strong>Smart Links</strong> are action-oriented URLs that can add items, apply a discount or send shoppers to a defined destination. They are useful for email, SMS, influencer, QR or affiliate journeys.</p><p class="small">UTMs cannot capture offline or unlinked “dark” channels such as word-of-mouth or a podcast mention. A post-purchase survey can help fill that attribution gap.</p></div>
+          ${quiz('rebuy', [
+            {q:'What is the clearest difference between an announcement banner and a tiered progress bar?', options:['They are the same feature','A banner communicates a broad message; a progress bar responds to current cart value and encourages a next reward','A progress bar appears only on the homepage','A banner automatically creates bundles'], correct:1, feedback:'The key distinction is purpose and context: broad communication versus a cart-specific, value-based incentive.'},
+            {q:'What should be validated before recommending an advanced bundle experience?', options:['Only the brand colour','Catalogue, margins, availability and relevant technical compatibility','Whether the merchant has an Instagram account','Whether the merchant wants more popups'], correct:1, feedback:'Bundles depend on commercial logic and, in some environments, technical compatibility. Avoid treating them as universally plug-and-play.'}
+          ])}
+          ${navActions('rebuy')}
+        </section>`,
+
+      eligibility: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 6 · Commercial & technical qualification</div>
+          <h1>Packages, eligibility and India checkout reality</h1>
+          <p class="lede">Now that you understand the features, learn how packaging and technical eligibility affect what can realistically be recommended.</p>
+          <h2>Rebuy package overview</h2>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Package</th><th>Primary outcome</th><th>Typical feature areas</th><th>Check first</th></tr></thead>
+            <tbody>
+              <tr><td>Cart Merchandising</td><td>AOV, cross-sell and cart experience</td><td>Smart Cart, widgets, bundles, cart incentives</td><td>Catalogue, margins, current cart and relevant compatibility.</td></tr>
+              <tr><td>Checkout Post-Purchase</td><td>Checkout and post-order monetisation</td><td>Checkout Extensions, Post-Purchase Offers</td><td>Shopify plan, checkout setup and current compatibility.</td></tr>
+              <tr><td>Flows & A/B Testing</td><td>Personalisation and learning</td><td>Smart Flows, experiments</td><td>Clear hypothesis, traffic volume and experiment constraints.</td></tr>
+              <tr><td>Search & Collections</td><td>Product discovery</td><td>Smart Search, Smart Collections</td><td>Existing search configuration and merchandising requirements.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout danger"><strong>Important: market availability</strong>Rebuy Monetize is not available in India. Do not include it in India-facing recommendations or proposals. For other markets, verify current availability before positioning it.</div>
+          <h2>Two questions to ask early</h2>
+          <div class="grid two"><div class="card"><h3>1. Shopify plan</h3><p>“Are you on Shopify Plus or a standard Shopify plan?”</p><p class="small">Some checkout-level functionality is subject to Shopify Plus requirements.</p></div><div class="card"><h3>2. Checkout setup</h3><p>“What are you using for checkout: Shopify’s native checkout, GoKwik, Shopflo, Razorpay, Shiprocket or another tool?”</p><p class="small">This helps determine whether checkout-level features may be viable.</p></div></div>
+          <h2>Why India checkout matters</h2>
+          <p>Many Indian D2C brands use checkout, COD and RTO tools such as GoKwik, Shopflo, Razorpay Magic Checkout, Shiprocket or similar solutions. These tools often address COD conversion, delivery confidence, address intelligence and RTO risk. They are not automatically competitors to all Anphonic/Rebuy work.</p>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Journey layer</th><th>Typical role</th><th>How to position Anphonic/Rebuy</th></tr></thead>
+            <tbody>
+              <tr><td>On-site and cart</td><td>Discovery, product suggestions, bundles, cart incentives, personalisation</td><td>A core area where Rebuy can create value before the checkout handoff.</td></tr>
+              <tr><td>Checkout/COD/RTO</td><td>Payment flow, COD validation, delivery address and RTO management</td><td>Respect the existing solution. Validate compatibility instead of assuming replacement or conflict.</td></tr>
+              <tr><td>Post-purchase</td><td>Thank-you-page and post-order experiences</td><td>Confirm Shopify plan, native checkout availability and implementation compatibility.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout warning"><strong>Compatibility rule</strong>Do not say every third-party checkout is incompatible. Do not say every feature will work. Confirm the merchant’s exact stack and test where required—particularly for checkout-level experiences and advanced bundle logic.</div>
+          <h2>Do not promise</h2>
+          <ul class="checklist">
+            <li>Checkout/Post-Purchase functionality before validating Shopify plan and checkout setup.</li>
+            <li>Universal compatibility with GoKwik, Shopflo, Razorpay, Shiprocket or any other third-party checkout.</li>
+            <li>Specific conversion, AOV, speed, ROAS or revenue outcomes as guarantees.</li>
+            <li>A feature is included without confirming current package, plan and market availability.</li>
+            <li>Rebuy Monetize in India.</li>
+            <li>That a demo environment proves a production setup will behave the same way.</li>
+          </ul>
+          ${quiz('eligibility', [
+            {q:'What should you confirm before discussing Checkout Post-Purchase as a recommendation?', options:['Only whether the brand has paid ads','Shopify plan and the merchant’s exact checkout setup','Only whether the brand uses COD','Whether the homepage has a banner'], correct:1, feedback:'Checkout-level eligibility is shaped by the plan and checkout architecture. Validate both early.'},
+            {q:'How should you position GoKwik or Shopflo in an Anphonic conversation?', options:['As a tool the merchant must remove','As a different journey layer that can solve checkout/COD/RTO while Anphonic may improve pre-checkout experience','As a replacement for Shopify hosting','As proof that no Rebuy package can be relevant'], correct:1, feedback:'The right approach is complementary and evidence-led. Do not attack a tool that may be solving a real merchant need.'}
+          ])}
+          ${navActions('eligibility')}
+        </section>`,
+
+      optimonk: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 7 · Use-case playbook</div>
+          <h1>OptiMonk by merchant goal</h1>
+          <p class="lede">Teach OptiMonk through jobs to be done: the merchant objective, the visitor moment, the campaign type, and the metric to watch.</p>
+          <div class="grid two">
+            <div class="card"><h3>Build the list</h3><span class="tag">Owned audience</span><p><strong>Examples:</strong> Smart Discount Popup, Lucky Wheel, SMS List Builder, list-building A/B test.</p><p><strong>Use when:</strong> The merchant has paid traffic but weak email/SMS capture.</p><p><strong>Metric:</strong> Popup conversion rate, list growth, owned-channel revenue.</p></div>
+            <div class="card"><h3>Promote offers</h3><span class="tag">Conversion</span><span class="tag">Margin</span><p><strong>Examples:</strong> Dynamic Shipping Bar, VIP Offers, Discount Reminder, offer tests.</p><p><strong>Use when:</strong> The merchant needs a more targeted alternative to blanket discounts.</p><p><strong>Metric:</strong> Redemption, AOV, conversion and margin impact.</p></div>
+            <div class="card"><h3>Reduce abandonment</h3><span class="tag">Cart recovery</span><p><strong>Examples:</strong> Exit Reminder, Cart Abandonment Stopper, Personalised Cart Saver.</p><p><strong>Use when:</strong> Visitors add products but leave without ordering.</p><p><strong>Metric:</strong> Abandonment rate, recovery rate, recovered revenue.</p></div>
+            <div class="card"><h3>Recommend products</h3><span class="tag">AOV</span><span class="tag">Discovery</span><p><strong>Examples:</strong> Upsell Popup, Browsing Reminder, Similar Product Recommender, Shopping Quiz.</p><p><strong>Use when:</strong> Customers struggle to discover relevant products or need help choosing.</p><p><strong>Metric:</strong> Recommendation click-through, AOV, conversion.</p></div>
+            <div class="card"><h3>Collect feedback</h3><span class="tag">Insight</span><p><strong>Examples:</strong> Attribution Survey, Feedback Survey, Purchase Satisfaction Survey, Issue Finder.</p><p><strong>Use when:</strong> The merchant lacks customer insight or wants to identify journey friction.</p><p><strong>Metric:</strong> Response rate, identified issues, review volume/quality.</p></div>
+            <div class="card"><h3>Guide visitors</h3><span class="tag">Personalisation</span><p><strong>Examples:</strong> Traffic-Based Welcome, International Welcome, Local Site Redirect, product-page optimisation.</p><p><strong>Use when:</strong> Messaging should change by traffic source, market or customer context.</p><p><strong>Metric:</strong> Landing-page conversion by source, country or audience.</p></div>
+          </div>
+          <h2>Feature card template</h2>
+          <div class="feature"><div class="feature-head"><h3>Example: Cart Abandonment Stopper</h3></div><div class="feature-body"><p><strong>Merchant problem:</strong> Shoppers place products in the cart but leave without purchasing.</p><p><strong>What the shopper sees:</strong> A contextual message or offer as they show exit intent.</p><p><strong>Screenshot needed:</strong> Show the actual popup, highlight the trigger and label the offer logic.</p><p><strong>Metric:</strong> Cart recovery rate and margin impact—not just popup views.</p><p><strong>Pitch:</strong> “Rather than showing the same message to every visitor, we can test a cart-specific intervention when a shopper appears ready to leave.”</p></div></div>
+          <div class="callout warning"><strong>Prioritise before expanding</strong>Do not present every campaign type to every merchant. Start with one or two high-confidence use cases tied to the merchant’s stated objective and test from there.</div>
+          ${navActions('optimonk')}
+        </section>`,
+
+      pitch: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 8 · Sales enablement</div>
+          <h1>How to pitch clearly and credibly</h1>
+          <p class="lede">A strong pitch is consultative: it acknowledges what already works, identifies a specific gap, connects that gap to a metric, and proposes a testable next step.</p>
+          <h2>The pitch structure</h2>
+          <div class="grid three"><div class="card"><h3>1. Acknowledge</h3><p>Recognise the merchant’s current setup and what it is designed to solve.</p></div><div class="card"><h3>2. Identify the gap</h3><p>Use evidence to show the journey or metric opportunity.</p></div><div class="card"><h3>3. Recommend a next step</h3><p>Suggest a relevant feature, test or audit—not a guarantee.</p></div></div>
+          <h2>Talk track: merchant already uses GoKwik or Shopflo</h2>
+          <div class="talk"><div class="label">Recommended framing</div>“GoKwik or Shopflo is solving a different part of the journey—checkout, COD and RTO. We would not position Rebuy as a replacement for that. Our opportunity is earlier in the journey: product discovery, merchandising, the cart experience, relevant cross-sells and AOV before the shopper reaches checkout.”</div>
+          <h2>Talk track: cart opportunity</h2>
+          <div class="talk"><div class="label">Evidence-led framing</div>“We would first validate this against your AOV, attach rate and cart completion data. If the cart is currently limited to line items and checkout, there may be an opportunity to test complementary recommendations, spend thresholds, bundles or subscription prompts—without changing the checkout tool that is already working for you.”</div>
+          <h2>Talk track: site speed concern</h2>
+          <div class="talk"><div class="label">Honest answer</div>“Any app can add some loading cost. The right question is how it is implemented and whether the commercial benefit outweighs that cost. We would follow the recommended setup, avoid duplicate loading methods, and validate the impact with a performance check rather than claim zero impact.”</div>
+          <h2>Language to avoid</h2>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Avoid</th><th>Use instead</th></tr></thead>
+            <tbody><tr><td>“Most brands have a generic cart.”</td><td>“We would like to assess whether the current cart has an opportunity to improve AOV or cart completion.”</td></tr><tr><td>“Rebuy is better than GoKwik.”</td><td>“These tools can address different parts of the journey; we will identify where they complement one another.”</td></tr><tr><td>“This will increase conversion by X%.”</td><td>“This is designed to influence conversion; we can define a baseline and test the impact.”</td></tr><tr><td>“This feature works everywhere.”</td><td>“We will confirm plan, checkout and implementation compatibility first.”</td></tr></tbody>
+          </table></div>
+          ${quiz('pitch', [
+            {q:'What is the best opening when a merchant already uses GoKwik?', options:['Tell them to remove it','Acknowledge its checkout/COD/RTO role and identify a possible pre-checkout opportunity','Claim Rebuy does everything GoKwik does','Avoid discussing the current setup'], correct:1, feedback:'Acknowledge the existing solution. Your role is to identify a complementary, measurable opportunity—not manufacture a replacement battle.'}
+          ])}
+          ${navActions('pitch')}
+        </section>`,
+
+      audit: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 9 · Practical application</div>
+          <h1>Run a simple store audit</h1>
+          <p class="lede">The audit is where product knowledge becomes useful. Your output should show evidence, a hypothesis, a metric, a recommendation and a clear next step.</p>
+          <h2>30-minute audit workflow</h2>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Time</th><th>What to do</th><th>What to capture</th></tr></thead>
+            <tbody>
+              <tr><td>0–5 min</td><td>Understand brand, category, market and visible offer.</td><td>Brand context, product range, price points, target market.</td></tr>
+              <tr><td>5–15 min</td><td>Review homepage, landing pages, navigation, search, collections and PDP.</td><td>Screenshots of friction or missed merchandising opportunities.</td></tr>
+              <tr><td>15–22 min</td><td>Review cart and checkout path.</td><td>Cart mechanics, incentives, checkout provider, COD/RTO cues.</td></tr>
+              <tr><td>22–27 min</td><td>Review popups, personalisation and feedback collection.</td><td>Lead capture, offers, exit intent, survey opportunities.</td></tr>
+              <tr><td>27–30 min</td><td>Synthesise.</td><td>Top three opportunities, assumptions, risks and next actions.</td></tr>
+            </tbody>
+          </table></div>
+          <h2>Audit output template</h2>
+          <div class="table-wrap"><table>
+            <tbody>
+              <tr><th>Brand / category / market</th><td>[Complete]</td></tr>
+              <tr><th>ICP fit</th><td>Strong / Moderate / Weak — explain why.</td></tr>
+              <tr><th>Shopify plan and checkout</th><td>[Known / Unknown — follow-up required]</td></tr>
+              <tr><th>Business goal and key metric</th><td>[Example: Improve AOV while preserving margin]</td></tr>
+              <tr><th>Evidence</th><td>Attach screenshots and describe what the shopper sees.</td></tr>
+              <tr><th>Top 3 opportunities</th><td>Observation → metric → feature/use case → rationale.</td></tr>
+              <tr><th>Technical/commercial checks</th><td>List assumptions and confirmations required.</td></tr>
+              <tr><th>Proposed next step</th><td>Audit review, data request, technical validation or controlled test.</td></tr>
+            </tbody>
+          </table></div>
+          <h2>Example reasoning</h2>
+          <div class="card"><p><strong>Observation:</strong> A brand has a basic cart, visible shipping threshold but no cart-specific “distance to reward” message, and no complementary-product prompts.</p><p><strong>Metric hypothesis:</strong> AOV and items per order may have room to improve.</p><p><strong>Recommendation:</strong> Evaluate Smart Cart, tiered progress incentives and carefully selected cross-sells.</p><p><strong>Do not claim:</strong> That the feature will increase AOV by a fixed amount. First confirm baseline AOV, gross margins, shipping economics, inventory and cart completion.</p></div>
+          ${navActions('audit')}
+        </section>`,
+
+      certification: () => `
+        <section class="section active">
+          <div class="eyebrow">Module 10 · Certification</div>
+          <h1>Show that you can apply the framework</h1>
+          <p class="lede">Completion of the reading modules is not certification. Certification requires a knowledge score and a practical merchant recommendation reviewed by a manager.</p>
+          <h2>Part 1: Knowledge check</h2>
+          <div class="card"><p>Use a separate scored quiz with 20–25 questions across ICP, metrics, diagnosis, Rebuy, eligibility, OptiMonk and talk tracks.</p><p><strong>Suggested pass mark:</strong> 80%.</p><p><strong>Rule:</strong> Questions should test reasoning and scenarios, not only feature names.</p></div>
+          <h2>Part 2: Practical task</h2>
+          <div class="card"><h3>Scenario</h3><p>An Indian skincare merchant runs on standard Shopify, uses GoKwik, has strong Instagram traffic, reasonable ROAS, low AOV and an otherwise basic cart. The team also has a small email list.</p><h3>Submit</h3><ul class="checklist"><li>ICP assessment and the questions you still need answered.</li><li>The primary metric opportunity and why.</li><li>Three relevant Rebuy and/or OptiMonk recommendations.</li><li>One recommendation you would not make yet, and why.</li><li>A 4–6 sentence merchant talk track.</li><li>A list of technical and commercial validation steps.</li></ul></div>
+          <h2>Manager review rubric</h2>
+          <div class="table-wrap"><table><thead><tr><th>Area</th><th>Pass standard</th></tr></thead><tbody><tr><td>Qualification</td><td>Correctly identifies ICP fit, plan, checkout considerations and information gaps.</td></tr><tr><td>Commercial reasoning</td><td>Connects recommendation to a relevant metric and does not overclaim impact.</td></tr><tr><td>Product mapping</td><td>Selects relevant features and avoids ineligible/unverified ones.</td></tr><tr><td>Positioning</td><td>Uses complementary, clear language; does not attack existing tools.</td></tr><tr><td>Documentation</td><td>Records evidence, assumptions, risks and a clear next step.</td></tr></tbody></table></div>
+          <div class="callout"><strong>Certification status</strong>Mark a learner as <em>Certified</em> only after the knowledge check and manager review are complete. Track learner name, role, module version, completion date, score, practical-task status and reviewer in a central system—not just browser storage.</div>
+          <button class="btn primary" data-complete="certification">Mark module complete ✓</button>
+          <p class="status" id="finishStatus"></p>
+        </section>`
+    };
+
+    function bindInteractions() {
+      document.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => {
+        const currentComplete = btn.dataset.complete;
+        if (currentComplete) complete(currentComplete);
+        go(btn.dataset.go);
+      }));
+      document.querySelectorAll('[data-complete]').forEach(btn => btn.addEventListener('click', () => {
+        complete(btn.dataset.complete);
+        if (btn.dataset.complete === 'certification') document.getElementById('finishStatus').textContent = 'Training marked complete locally. Complete the formal knowledge check and manager review for certification.';
+      }));
+      document.querySelectorAll('.option').forEach(btn => btn.addEventListener('click', () => {
+        const question = btn.closest('.question');
+        if (question.dataset.locked) return;
+        question.dataset.locked = 'true';
+        const correct = Number(btn.dataset.correct);
+        const answer = Number(btn.dataset.answer);
+        question.querySelectorAll('.option').forEach(o => {
+          if (Number(o.dataset.answer) === correct) o.classList.add('correct');
+          if (o === btn && answer !== correct) o.classList.add('wrong');
+          o.disabled = true;
+        });
+        question.querySelector('.feedback').classList.add('show');
+      }));
+    }
+
+    function render() { document.getElementById('main').innerHTML = pages[active](); bindInteractions(); }
+    renderNav(); render();
+  </script>
+</body>
+</html>
